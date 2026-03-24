@@ -127,11 +127,26 @@ Check `template-bridge:template-catalog` when task needs a specialist NOT in:
 
 Install fresh: `npx claude-code-templates@latest --agent {category}/{name} --yes`
 
+## Context7: Fresh Docs (MANDATORY)
+
+Before implementing with ANY external library, framework, or SDK:
+
+```
+mcp__context7__resolve-library-id → mcp__context7__query-docs
+```
+
+**When**: Next.js, Supabase, React, Tailwind, Zod, BullMQ, Qdrant, LangChain — any library.
+**Who**: Main agent, subagents, and skills — everyone queries Context7.
+**Why**: Claude's training data is stale. APIs change. Context7 gives current docs.
+
+**Never write implementation code based on memory alone. Always verify with Context7 first.**
+
 ## Skill Invocation Priority
 
-1. **Process skills FIRST**: brainstorming, debugging, verification
-2. **Implementation skills SECOND**: TDD, code-review, frontend-design
-3. **External templates THIRD**: only when no existing skill covers the need
+1. **Context7 FIRST**: query fresh docs for any library/framework being used
+2. **Process skills SECOND**: brainstorming, debugging, verification
+3. **Implementation skills THIRD**: TDD, code-review, frontend-design
+4. **External templates FOURTH**: only when no existing skill covers the need
 
 ## Key Superpowers Skills Reference
 
@@ -159,3 +174,4 @@ Install fresh: `npx claude-code-templates@latest --agent {category}/{name} --yes
 - Multiple fixes simultaneously
 - Trust subagent reports without own verification
 - Qualifier language ("should work", "probably fixed")
+- Implement with library without querying Context7 first
