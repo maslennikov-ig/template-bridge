@@ -172,36 +172,28 @@ claude plugin marketplace add /path/to/template-bridge
 claude plugin install template-bridge@template-bridge-marketplace
 ```
 
-### Recommended: Add to global CLAUDE.md
+### Three layers of protection
 
-For maximum reliability, add to `~/.claude/CLAUDE.md`:
+The plugin uses three layers to ensure Claude **never forgets** the workflow, even in a fresh context:
 
-```markdown
-## Workflow: Superpowers + Beads + Templates
+| Layer | Mechanism | How it works |
+|-------|-----------|-------------|
+| **1. CLAUDE.md** | System prompt (highest priority) | Rules loaded before anything else, every session |
+| **2. SessionStart hook** | Echo reminder after `bd prime` | Explicit reminder in context on session start |
+| **3. Skill description** | Plugin skill listing | `unified-workflow` trigger visible in skill list |
 
-Before starting ANY task, invoke `template-bridge:unified-workflow` skill to load the full workflow.
+### Layer 1: Copy CLAUDE.md to global config
 
-### Quick Reference (do NOT skip steps)
+The repo includes a ready-to-use [`CLAUDE.md`](CLAUDE.md). Copy its contents to your global config:
 
-1. **Track** — `bd create` or `bd update <id> --status in_progress`
-2. **Brainstorm** — `superpowers:brainstorming` (design before code)
-3. **Plan** — `superpowers:writing-plans` (2-5 min tasks)
-4. **Isolate** — `superpowers:using-git-worktrees` (non-trivial work)
-5. **Implement** — `superpowers:test-driven-development` (RED → GREEN → REFACTOR)
-6. **Review** — `superpowers:requesting-code-review`
-7. **Verify** — `superpowers:verification-before-completion` (evidence before claims)
-8. **Finish** — `superpowers:finishing-a-development-branch`
-9. **Close** — `bd close <id> --reason "Done"`
-
-### Rules
-
-- No production code without a failing test first
-- No completion claims without running verification commands
-- No work without a beads task
-- Check `template-bridge:template-catalog` when a specialist agent is needed
+```bash
+# Append to your global CLAUDE.md (create if doesn't exist)
+cat /path/to/template-bridge/CLAUDE.md >> ~/.claude/CLAUDE.md
 ```
 
-### Optional: SessionStart hook
+Or copy manually — the file is short (the full 9-step workflow + 4 rules).
+
+### Layer 2 (optional): SessionStart hook
 
 Add to `~/.claude/settings.json` for an extra reminder at every session start:
 
@@ -222,6 +214,10 @@ Add to `~/.claude/settings.json` for an extra reminder at every session start:
   }
 }
 ```
+
+### Layer 3: Automatic
+
+The skill description is always visible in Claude's skill listing — no setup needed.
 
 ## Updating
 
