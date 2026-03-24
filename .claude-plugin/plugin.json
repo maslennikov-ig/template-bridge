@@ -2,5 +2,11 @@
   "name": "template-bridge",
   "description": "Unified superpowers+beads workflow + proactive template catalog (413+ specialist agents on-demand from claude-code-templates)",
   "version": "1.0.0",
-  "author": { "name": "me" }
+  "author": {
+    "name": "maslennikov-ig",
+    "url": "https://github.com/maslennikov-ig"
+  },
+  "repository": "https://github.com/maslennikov-ig/template-bridge",
+  "license": "MIT",
+  "keywords": ["superpowers", "beads", "tdd", "workflow", "claude-code-templates"]
 }

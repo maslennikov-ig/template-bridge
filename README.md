@@ -1,6 +1,20 @@
 # Template Bridge Plugin
 
-Unified development workflow for Claude Code: **Superpowers + Beads + Templates**.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Claude Code Plugin](https://img.shields.io/badge/Claude_Code-Plugin-blueviolet)](https://docs.anthropic.com/en/docs/claude-code)
+
+Unified development workflow for Claude Code: **[Superpowers](https://github.com/obra/superpowers) + [Beads](https://github.com/steveyegge/beads) + [Templates](https://github.com/davila7/claude-code-templates)**.
+
+Bridges three powerful Claude Code plugins into a single disciplined workflow with on-demand access to 413+ specialist agent templates.
+
+## Prerequisites
+
+| Plugin | Install | Purpose |
+|--------|---------|---------|
+| [Superpowers](https://github.com/obra/superpowers) | `/plugin install superpowers` | TDD, brainstorming, debugging, code review |
+| [Beads](https://github.com/steveyegge/beads) | `/plugin install beads` | Task tracking across sessions |
+
+Both are optional — the workflow skill adapts, but you get the full power with all three.
 
 ## What's Inside
 
@@ -143,19 +157,94 @@ npx claude-code-templates@latest
 
 ## Installation
 
-Already installed globally. To reinstall:
+### From GitHub (recommended)
 
 ```bash
-claude plugin marketplace add ~/code/template-bridge
+claude plugin marketplace add github:maslennikov-ig/template-bridge
 claude plugin install template-bridge@template-bridge-marketplace
 ```
 
-## Updating the Catalog
+### From local clone
 
-Edit `skills/template-catalog/SKILL.md`, commit, then:
+```bash
+git clone https://github.com/maslennikov-ig/template-bridge.git
+claude plugin marketplace add /path/to/template-bridge
+claude plugin install template-bridge@template-bridge-marketplace
+```
+
+### Recommended: Add to global CLAUDE.md
+
+For maximum reliability, add to `~/.claude/CLAUDE.md`:
+
+```markdown
+## Workflow: Superpowers + Beads + Templates
+
+Before starting ANY task, invoke `template-bridge:unified-workflow` skill to load the full workflow.
+
+### Quick Reference (do NOT skip steps)
+
+1. **Track** — `bd create` or `bd update <id> --status in_progress`
+2. **Brainstorm** — `superpowers:brainstorming` (design before code)
+3. **Plan** — `superpowers:writing-plans` (2-5 min tasks)
+4. **Isolate** — `superpowers:using-git-worktrees` (non-trivial work)
+5. **Implement** — `superpowers:test-driven-development` (RED → GREEN → REFACTOR)
+6. **Review** — `superpowers:requesting-code-review`
+7. **Verify** — `superpowers:verification-before-completion` (evidence before claims)
+8. **Finish** — `superpowers:finishing-a-development-branch`
+9. **Close** — `bd close <id> --reason "Done"`
+
+### Rules
+
+- No production code without a failing test first
+- No completion claims without running verification commands
+- No work without a beads task
+- Check `template-bridge:template-catalog` when a specialist agent is needed
+```
+
+### Optional: SessionStart hook
+
+Add to `~/.claude/settings.json` for an extra reminder at every session start:
+
+```json
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'WORKFLOW REMINDER: Invoke template-bridge:unified-workflow before any task. Flow: bd create → brainstorm → plan → TDD → review → verify → finish → bd close'"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+## Updating
 
 ```bash
 claude plugin install template-bridge@template-bridge-marketplace
 ```
 
-Plugin re-reads from the local git repo on reinstall.
+Plugin re-reads from the source on reinstall.
+
+## Contributing
+
+1. Fork this repo
+2. Edit skills or add new ones
+3. Submit a PR
+
+Plugin structure follows the [official Claude Code plugin spec](https://github.com/anthropics/claude-code).
+
+## Credits
+
+- [Superpowers](https://github.com/obra/superpowers) by Jesse Vincent — the TDD/brainstorming/debugging methodology
+- [Beads](https://github.com/steveyegge/beads) by Steve Yegge — task tracking for AI workflows
+- [claude-code-templates](https://github.com/davila7/claude-code-templates) by Daniel Avila — 413+ specialist agent templates
+
+## License
+
+[MIT](LICENSE)

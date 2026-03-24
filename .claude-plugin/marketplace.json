@@ -1,7 +1,7 @@
 {
   "name": "template-bridge-marketplace",
   "description": "Unified workflow rules + on-demand specialist agents",
-  "owner": { "name": "me" },
+  "owner": { "name": "maslennikov-ig" },
   "plugins": [
     {
       "name": "template-bridge",
