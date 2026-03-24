@@ -22,24 +22,55 @@ description: >
 ```
 Task arrives
     │
-    ├─ bd create / bd update --status in_progress
+    ├─ 1. EPIC: bd create -t epic "High-level goal"
+    │       (container — tracks intent, holds lock, preserves context)
     │
-    ├─ superpowers:brainstorming (design before code)
+    ├─ 2. BRAINSTORM: superpowers:brainstorming (design before code)
     │
-    ├─ superpowers:writing-plans (decompose into 2-5 min tasks)
+    ├─ 3. PLAN: superpowers:writing-plans (decompose into 2-5 min tasks)
     │
-    ├─ superpowers:using-git-worktrees (isolate, non-trivial work)
+    ├─ 4. SUB-TASKS: Create concrete tasks from the plan:
+    │       bd create "Sub-task 1" -t task
+    │       bd dep add sub-task-1 epic-id --type parent-child
+    │       bd dep add sub-task-2 sub-task-1  (if sequential — blocks)
     │
-    ├─ For each task:
-    │   ├─ TDD: RED → verify fail → GREEN → verify pass → REFACTOR
-    │   ├─ Commit after each green
-    │   └─ superpowers:requesting-code-review
+    ├─ 5. ISOLATE: superpowers:using-git-worktrees (non-trivial work)
     │
-    ├─ superpowers:verification-before-completion
+    ├─ 6. IMPLEMENT: bd ready → pick from Ready Front → bd update <id> --claim
+    │       For each sub-task:
+    │       ├─ TDD: RED → verify fail → GREEN → verify pass → REFACTOR
+    │       ├─ Commit after each green
+    │       ├─ superpowers:requesting-code-review
+    │       └─ bd close <sub-id> --reason "Done"
+    │           (closing unblocks next Ready Front automatically)
     │
-    ├─ superpowers:finishing-a-development-branch
+    ├─ 7. VERIFY: superpowers:verification-before-completion
     │
-    └─ bd close <id> --reason "Done"
+    ├─ 8. FINISH: superpowers:finishing-a-development-branch
+    │
+    └─ 9. CLOSE: bd close <epic-id> --reason "Done"
+```
+
+### Task Decomposition with Beads Dependencies
+
+**Four dependency types** (only `blocks` affects `bd ready`):
+
+| Type | Effect on `bd ready` | Use when |
+|------|---------------------|----------|
+| **blocks** | YES — blocked task hidden from `bd ready` | Sequential work, technical prerequisites |
+| **parent-child** | No | Epic → sub-task structure |
+| **related** | No | Connected but independent work |
+| **discovered-from** | No | Side-quest found during implementation |
+
+**Direction rule**: Think "X needs Y" → `bd dep add X Y`
+
+**Ready Fronts**: As sub-tasks close, blocked work automatically becomes ready.
+Use `bd ready` to always see what can be worked on NOW.
+
+**Side quests during implementation**:
+```
+bd create "Found: missing input validation" -t bug
+bd dep add new-id current-id --type discovered-from
 ```
 
 ## TDD: Red-Green-Refactor (RIGID — no exceptions)
@@ -77,11 +108,13 @@ Before claiming ANYTHING done, invoke `superpowers:verification-before-completio
 
 ## Beads Task Tracking
 
-- ALL work MUST be tracked: `bd create` or claim with `bd update <id> --status in_progress`
-- `bd ready` → find available tasks (no blockers)
-- `bd close <id> --reason "..."` → mark done
-- Emergent work: `bd create "Issue" -t bug --deps discovered-from:<current-id>`
+- ALL work MUST be tracked — start with epic, decompose after plan
+- `bd ready` → find available tasks from current Ready Front
+- `bd update <id> --claim` → atomic start (marks in_progress + lock)
+- `bd close <id> --reason "..."` → mark done, auto-unblocks dependents
+- Side quests: `bd create "Issue" -t bug` + `bd dep add new-id current-id --type discovered-from`
 - Multi-terminal: each works on DIFFERENT issues (exclusive lock)
+- Session recovery: `bd list --status in_progress` → `bd show <id>` → read notes
 
 ## When to Pull External Templates
 
