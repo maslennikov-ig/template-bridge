@@ -193,21 +193,41 @@ cat /path/to/template-bridge/CLAUDE.md >> ~/.claude/CLAUDE.md
 
 Or copy manually — the file is short (the full 9-step workflow + 4 rules).
 
-### Layer 2 (optional): SessionStart hook
+### Layer 2 (recommended): Hooks
 
-Add to `~/.claude/settings.json` for an extra reminder at every session start:
+The repo includes [`settings.example.json`](settings.example.json) with two hooks:
+
+- **SessionStart** — `bd prime` (loads Beads context) + workflow reminder
+- **PreCompact** — `bd prime` (re-injects Beads context before compaction so tasks survive)
+
+Merge into your `~/.claude/settings.json`:
+
+```bash
+# View the example first
+cat /path/to/template-bridge/settings.example.json
+
+# Then manually merge the "hooks" section into your ~/.claude/settings.json
+```
+
+Or copy the hooks block directly:
 
 ```json
 {
   "hooks": {
+    "PreCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          { "type": "command", "command": "bd prime" }
+        ]
+      }
+    ],
     "SessionStart": [
       {
         "matcher": "",
         "hooks": [
-          {
-            "type": "command",
-            "command": "echo 'WORKFLOW REMINDER: Invoke template-bridge:unified-workflow before any task. Flow: bd create → brainstorm → plan → TDD → review → verify → finish → bd close'"
-          }
+          { "type": "command", "command": "bd prime" },
+          { "type": "command", "command": "echo 'WORKFLOW REMINDER: Invoke template-bridge:unified-workflow before any task. Flow: bd create → brainstorm → plan → TDD → review → verify → finish → bd close'" }
         ]
       }
     ]

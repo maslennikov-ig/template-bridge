@@ -1,0 +1,30 @@
+{
+  "hooks": {
+    "PreCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bd prime"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bd prime"
+          },
+          {
+            "type": "command",
+            "command": "echo 'WORKFLOW REMINDER: Invoke template-bridge:unified-workflow before any task. Flow: bd create → brainstorm → plan → TDD → review → verify → finish → bd close'"
+          }
+        ]
+      }
+    ]
+  }
+}
