@@ -1,0 +1,13 @@
+{
+  "name": "template-bridge-marketplace",
+  "description": "Unified workflow rules + on-demand specialist agents",
+  "owner": { "name": "me" },
+  "plugins": [
+    {
+      "name": "template-bridge",
+      "source": "./",
+      "description": "Unified superpowers+beads workflow + 413+ on-demand specialist agents",
+      "version": "1.0.0"
+    }
+  ]
+}
