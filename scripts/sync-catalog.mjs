@@ -4,9 +4,6 @@
 // the davila7/claude-code-templates directory tree `cli-tool/components/agents`
 // — the same tree `npx claude-code-templates --agent <cat>/<name>` installs from.
 //
-// NOT docs/api/agents.json — that index is incomplete (156 vs 421 real) and
-// must never be used here.
-//
 // Usage:   node scripts/sync-catalog.mjs
 //   Set GITHUB_TOKEN to raise the GitHub API rate limit (60/h anon → 5000/h).
 //
