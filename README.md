@@ -139,6 +139,24 @@ npx claude-code-templates@latest
 
 [Full list: 26 categories, 413+ agents](https://github.com/davila7/claude-code-templates)
 
+### Refreshing the catalog
+
+The category table in [`skills/template-catalog/SKILL.md`](skills/template-catalog/SKILL.md)
+is auto-generated from the upstream `cli-tool/components/agents` tree (the same
+source `npx --agent` installs from — not the incomplete `docs/api/agents.json`).
+To resync counts and names after upstream changes:
+
+```bash
+node scripts/sync-catalog.mjs
+# Optional: raise the GitHub API rate limit (60/h anon → 5000/h)
+GITHUB_TOKEN=ghp_xxx node scripts/sync-catalog.mjs
+```
+
+Requires `curl` and Node 18+. The script rewrites only the block between the
+`<!-- catalog:start -->` / `<!-- catalog:end -->` markers plus the agent/category
+counts. It exits non-zero and leaves the file untouched if the upstream layout
+changed or zero agents were found — no silently-wrong table.
+
 ## Skill Priority
 
 1. **Process** — brainstorming, debugging, verification (always first)
