@@ -160,7 +160,7 @@ npx claude-code-templates@latest
 ### From GitHub (recommended)
 
 ```bash
-claude plugin marketplace add github:maslennikov-ig/template-bridge
+claude plugin marketplace add maslennikov-ig/template-bridge
 claude plugin install template-bridge@template-bridge-marketplace
 ```
 
