@@ -20,6 +20,6 @@ Before starting ANY task, invoke `template-bridge:unified-workflow` skill to loa
 - No production code without a failing test first
 - No completion claims without running verification commands
 - No work without a beads task
-- **Always query Context7 before implementing with any library/framework** (`resolve-library-id` → `query-docs`)
+- **Always query Docs L1/L2 before implementing with any library/framework** (`resolve-library-id` → `query-docs`): @neuledge/context first with lockfile-routed package/version; Context7 MCP only for L1 miss/stale/insufficient
 - Check `template-bridge:template-catalog` when a specialist agent is needed
 - Side quests: `bd create -t bug` + `bd dep add new current --type discovered-from`

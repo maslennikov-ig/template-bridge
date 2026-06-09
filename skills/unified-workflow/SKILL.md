@@ -127,23 +127,23 @@ Check `template-bridge:template-catalog` when task needs a specialist NOT in:
 
 Install fresh: `npx claude-code-templates@latest --agent {category}/{name} --yes`
 
-## Context7: Fresh Docs (MANDATORY)
+## Docs L1/L2: Fresh Docs (MANDATORY)
 
 Before implementing with ANY external library, framework, or SDK:
 
 ```
-mcp__context7__resolve-library-id → mcp__context7__query-docs
+@neuledge/context MCP first with package@version from lockfile; Context7 MCP fallback: resolve-library-id -> query-docs
 ```
 
 **When**: Next.js, Supabase, React, Tailwind, Zod, BullMQ, Qdrant, LangChain — any library.
-**Who**: Main agent, subagents, and skills — everyone queries Context7.
+**Who**: Main agent, subagents, and skills — everyone uses Docs L1/L2: @neuledge/context first with lockfile-routed package/version; Context7 MCP only for L1 miss/stale/insufficient.
 **Why**: Claude's training data is stale. APIs change. Context7 gives current docs.
 
-**Never write implementation code based on memory alone. Always verify with Context7 first.**
+**Never write implementation code based on memory alone. Always verify with Docs L1/L2 first.**: @neuledge/context first with lockfile-routed package/version; Context7 MCP only for L1 miss/stale/insufficient
 
 ## Skill Invocation Priority
 
-1. **Context7 FIRST**: query fresh docs for any library/framework being used
+1. **Docs L1/L2 FIRST**: query fresh docs for any library/framework being used: @neuledge/context first with lockfile-routed package/version; Context7 MCP only for L1 miss/stale/insufficient
 2. **Process skills SECOND**: brainstorming, debugging, verification
 3. **Implementation skills THIRD**: TDD, code-review, frontend-design
 4. **External templates FOURTH**: only when no existing skill covers the need
@@ -174,4 +174,4 @@ mcp__context7__resolve-library-id → mcp__context7__query-docs
 - Multiple fixes simultaneously
 - Trust subagent reports without own verification
 - Qualifier language ("should work", "probably fixed")
-- Implement with library without querying Context7 first
+- Implement with library without querying Docs L1/L2 first: @neuledge/context first with lockfile-routed package/version; Context7 MCP only for L1 miss/stale/insufficient
